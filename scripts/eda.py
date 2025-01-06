@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+data = pd.read_csv("../data/Employee_data.csv")
+
+# Inspect the first five rows
+print("Dataset Preview:")
+print(data.head())
+
+# Check for missing values
+print("\nMissing Values:")
+print(data.isnull().sum())
+
+# Visualize Attrition Distribution
+sns.countplot(x='Attrition', data=data)
+plt.title('Attrition Distribution')
+plt.show()
