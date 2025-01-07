@@ -18,12 +18,16 @@ sns.countplot(x='Attrition', data=data)
 plt.title('Attrition Distribution')
 plt.show()
 
-# The Attrition Distribution graph highlights a significant class imbalance in the dataset. 
-# Approximately 1200 employees have not left the company (labeled as "No"), while only about 240 employees have left (labeled as "Yes"). 
-# This translates to roughly an 83% to 17% split between retained and departed employees. 
-# Such an imbalance may lead to predictive models favoring the majority class ("No") and failing to identify employees at risk of leaving. 
-# To address this, we will explore techniques such as oversampling, undersampling, or class weights, along with evaluation metrics like precision, recall, and F1-score, 
-# ensuring the model captures meaningful patterns related to attrition.
+# EDA Observation: Attrition Distribution
+# ----------------------------------------
+# - Significant class imbalance observed:
+#   * Retained Employees: ~83%.
+#   * Departed Employees: ~17%.
+# - Key Implication:
+#   * Predictive models may favor the majority class ("No").
+# - Next Steps:
+#   * Address imbalance through resampling techniques (e.g., SMOTE, undersampling).
+#   * Use evaluation metrics such as precision, recall, and F1-score for balanced assessment.
 
 # Attrition proportions to check data balance
 attrition_count = data['Attrition'].value_counts(normalize=True)
@@ -36,57 +40,33 @@ plt.title('Attrition by Department')
 plt.xticks(rotation=45)
 plt.show()
 
-# EDA Analysis: Employee Attrition
+# Departmental Attrition Analysis
 # --------------------------------
+# 1. Research & Development (R&D):
+#   - Largest workforce (~950 employees).
+#   - Absolute turnover: 133 employees (14% attrition rate).
+#   - Key Insight:
+#     * Stable proportional attrition, but total losses are the highest.
 
-# 1. Overall Attrition Distribution
-# - Class Imbalance Observed:
-#   * Retained Employees: ~1200 (83%).
-#   * Departures: ~240 (17%).
-# - Key Implications:
-#   * Imbalance may lead to poor predictions for the minority class (departures).
-#   * Mitigation Strategies:
-#     - Resampling techniques (e.g., SMOTE, undersampling).
-#     - Assigning class weights in models.
-#   * Model Evaluation Focus:
-#     - Emphasize metrics like precision, recall, and F1-score to ensure fair assessment.
+# 2. Sales:
+#   - Mid-sized workforce (~430 employees).
+#   - Absolute turnover: 90 employees (21% attrition rate).
+#   - Key Insight:
+#     * Highest proportional attrition, suggesting potential challenges in workload or satisfaction.
 
-# 2. Departmental Attrition Analysis
-# Research & Development (R&D):
-# - Largest Workforce: ~950 employees.
-# - Departures: 133 (14% attrition rate).
-# - Key Insight:
-#   * Highest absolute turnover, but proportional attrition rate appears stable for its size.
+# 3. Human Resources (HR):
+#   - Smallest workforce (~60 employees).
+#   - Absolute turnover: 7 employees (12% attrition rate).
+#   - Key Insight:
+#     * Low turnover and stable retention, indicating effective internal policies.
 
-# Sales:
-# - Mid-Sized Workforce: ~430 employees.
-# - Departures: 90 (21% attrition rate).
-# - Key Insight:
-#   * Highest proportional attrition, indicating potential challenges in retention related to workload, compensation, or satisfaction.
-
-# Human Resources (HR):
-# - Smallest Workforce: ~60 employees.
-# - Departures: 7 (12% attrition rate).
-# - Key Insight:
-#   * Lowest absolute turnover and a stable retention rate, potentially reflecting strong internal policies.
-
-# 3. Key Insights:
-# - Sales Department:
-#   * High proportional attrition requires investigation into drivers such as workload, pay structure, and career growth opportunities.
-# - R&D Department:
-#   * Largest department with stable proportional attrition, though absolute losses warrant monitoring.
-# - HR Department:
-#   * Low turnover and stable retention, suggesting effective HR practices that may be modeled across other departments.
-
-# 4. Next Steps:
-# - Feature Exploration:
-#   * Analyze age, salary, job satisfaction, work-life balance, and tenure as potential attrition drivers.
-# - Class Imbalance Handling:
-#   * Implement techniques like SMOTE, undersampling, or class weighting during modeling.
-# - Evaluation Metrics:
-#   * Focus on precision, recall, and F1-score to ensure balanced performance across classes.
-# - Department-Specific Strategies:
-#   * Investigate retention challenges in Sales and monitor trends in R&D for targeted interventions.
+# 4. Recommendations:
+#   - Sales:
+#     * Investigate drivers like workload, compensation, and career growth opportunities.
+#   - R&D:
+#     * Monitor attrition trends and ensure retention in key roles.
+#   - HR:
+#     * Replicate successful practices across other departments.
 
 # Turnover by Age
 sns.histplot(data=data, x='Age', hue='Attrition', multiple='stack', bins=20)
@@ -109,34 +89,29 @@ attrition_age_stats = data.groupby('Attrition')['Age'].describe()
 print(attrition_age_stats)
 
 # Age Distribution Analysis
-# ------------------------
+# --------------------------
 # 1. Attrition Trends by Age:
-# - Peak attrition observed in younger age groups (28-35).
-# - Employee distribution concentrated in the 30-40 age range.
+# - Younger employees (25-35) exhibit **higher attrition rates**, likely due to:
+#   * Career exploration or dissatisfaction with pay.
+#   * Desire for faster growth opportunities.
+# - Mid-career employees (35-45) have **moderate attrition**, possibly due to:
+#   * Balancing work-life commitments or reaching career plateaus.
+# - Senior employees (45+) demonstrate **better retention**, suggesting:
+#   * Job stability and reduced inclination to switch roles.
 
-# 2. Key Observations:
-# - Younger employees (25-35) show **higher attrition rates**, possibly due to:
-#   * Early career exploration.
-#   * Desire for faster growth or dissatisfaction with pay.
-# - Mid-career employees (35-45) have **moderate attrition**, suggesting:
-#   * Balancing work-life commitments or career plateaus.
-# - Senior employees (45+) demonstrate **better retention**, indicating:
-#   * Stability in roles and reduced job-switching tendencies.
+# 2. Statistical Insights:
+# - Attrition group (`Yes`) mean age: **33.6 years**.
+# - Retention group (`No`) mean age: **37.6 years**.
+# - Younger employees dominate the attrition group, while retention improves with age.
 
-# 3. Distribution Insights:
-# - Age distribution is **roughly normal**:
-#   * Mean age falls in the mid-30s.
-#   * Fewer employees are observed at the extremes (<25 and >55).
-# - Retention improves as age increases, aligning with job security preferences.
-
-# 4. Risk Areas and Recommendations:
-# - Younger Workforce (25-35):
-#   * Focus retention strategies on growth opportunities, mentorship, and career development programs.
-#   * Assess salary competitiveness and job satisfaction metrics.
+# 3. Recommendations:
+# - Younger Employees (25-35):
+#   * Focus on growth opportunities, mentorship, and career development programs.
+#   * Regularly assess job satisfaction and salary competitiveness.
 # - Mid-Career Employees (35-45):
-#   * Provide pathways for upskilling, leadership training, and lateral movement.
+#   * Offer leadership training, upskilling programs, and lateral movement opportunities.
 # - Senior Employees (45+):
-#   * Leverage insights from lower attrition rates to create mentoring opportunities and retain organizational knowledge.
+#   * Leverage their stability and organizational knowledge through mentoring initiatives.
 
 # Correlation Heatmap
 numeric_features = data.select_dtypes(include=['float64', 'int64'])
@@ -146,3 +121,8 @@ plt.figure(figsize=(12,8))
 sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", cbar=True)
 plt.title('Correlation Heatmap')
 plt.show()
+
+# Correlation Heatmap Insights
+# ----------------------------
+# - Identify relationships between numerical features and target variable (`Attrition`).
+# - Use high-correlation features as predictors in modeling.
