@@ -28,3 +28,8 @@ sns.countplot(x='Department', hue='Attrition', data=data)
 plt.title('Attrition by Department')
 plt.xticks(rotation=45)
 plt.show()
+
+# Turnover by Age
+sns.histplot(data=data, x='Age', hue='Attrition', multiple='stack', bins=20)
+plt.title('Attrition by Age')
+plt.show()
