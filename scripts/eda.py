@@ -17,3 +17,8 @@ print(data.isnull().sum())
 sns.countplot(x='Attrition', data=data)
 plt.title('Attrition Distribution')
 plt.show()
+
+# Attrition proportions to check data balance
+attrition_count = data['Attrition'].value_counts(normalize=True)
+print("\nAttrition Proportions:")
+print(attrition_count)
