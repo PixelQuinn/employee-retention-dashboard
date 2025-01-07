@@ -33,3 +33,12 @@ plt.show()
 sns.histplot(data=data, x='Age', hue='Attrition', multiple='stack', bins=20)
 plt.title('Attrition by Age')
 plt.show()
+
+# Correlation Heatmap
+numeric_features = data.select_dtypes(include=['float64', 'int64'])
+correlation_matrix = numeric_features.corr()
+
+plt.figure(figsize=(12,8))
+sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap="coolwarm", cbar=True)
+plt.title('Correlation Heatmap')
+plt.show()
