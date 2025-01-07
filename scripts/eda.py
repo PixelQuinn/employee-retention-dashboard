@@ -22,3 +22,9 @@ plt.show()
 attrition_count = data['Attrition'].value_counts(normalize=True)
 print("\nAttrition Proportions:")
 print(attrition_count)
+
+# Turnover by Department
+sns.countplot(x='Department', hue='Attrition', data=data)
+plt.title('Attrition by Department')
+plt.xticks(rotation=45)
+plt.show()
