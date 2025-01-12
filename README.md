@@ -24,7 +24,7 @@ This project focuses on **employee retention analysis** through data-driven insi
 
 ## 📂 Directories
 ### 1. `data/`
-Contains raw and processed datasets for analysis. Please ensure no sensitive data is included.
+Contains raw and processed datasets for analysis.
 
 ### 2. `notebooks/`
 Jupyter Notebooks for:
